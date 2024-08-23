@@ -12,10 +12,10 @@ class TicketController extends Controller
     }
 
     public function open() {
-        return TicketResource::collection(Ticket::where('status', 0)->paginate());
+        return TicketResource::collection(Ticket::where('status', false)->paginate());
     }
 
     public function closed() {
-        return TicketResource::collection(Ticket::where('status', 1)->paginate());
+        return TicketResource::collection(Ticket::where('status', true)->paginate());
     }
 }

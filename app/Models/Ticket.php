@@ -12,6 +12,10 @@ class Ticket extends Model
 
     protected $fillable = ['subject', 'content', 'status'];
 
+    protected $casts = [
+        'status' => 'boolean'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
