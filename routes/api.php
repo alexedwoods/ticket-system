@@ -28,3 +28,5 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 });
+
+Route::get('stats', [TicketController::class, 'stats']);

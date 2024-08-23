@@ -24,4 +24,20 @@ class TicketController extends Controller
         $user = User::where('email', $email)->first();
         return TicketResource::collection($user->tickets()->paginate(3));
     }
+
+    public function stats() {
+        $ticketsCount = Ticket::all()->count();
+        $unprocessedTicketsCount = Ticket::where('status', false)->count();
+        $highestTicketCountUser = User::withCount('tickets')
+            ->orderBy('tickets_count', 'desc')
+            ->first();
+        $latestTicketTimestamp = Ticket::where('status', false)->orderBy('created_at', 'desc')->first()->created_at;
+
+        return response()->json([
+            'total_tickets' => $ticketsCount,
+            'total_unprocessed_tickets' => $unprocessedTicketsCount,
+            'user_with_most_tickets' => $highestTicketCountUser,
+            'latest_ticket_created_at_' => $latestTicketTimestamp,
+        ]);
+    }
 }
