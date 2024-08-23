@@ -15,13 +15,9 @@ use App\Http\Controllers\TicketController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('login', function(Request $request) {
-   if (Auth::attempt([$request->only('email', 'password')])) {
+    $credentials = $request->only('email', 'password');
+   if (Auth::attempt($credentials)) {
        return response()->json(Auth::user());
    } else {
        return response()->json(['error' => 'Invalid login credentials'], 401);
@@ -35,7 +31,15 @@ Route::post('logout', function(Request $request) {
     ]);
 });
 
-Route::prefix('tickets')->group(function () {
-    Route::get('open', [TicketController::class, 'open']);
-    Route::get('closed', [TicketController::class, 'closed']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('tickets')->group(function () {
+        Route::get('open', [TicketController::class, 'open']);
+        Route::get('closed', [TicketController::class, 'closed']);
+    });
+
+    Route::get('user', function (Request $request) {
+        return $request->user();
+    });
 });
+
+
