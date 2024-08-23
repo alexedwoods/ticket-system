@@ -8,14 +8,14 @@ use App\Models\Ticket;
 class TicketController extends Controller
 {
     public function index() {
-        Return TicketResource::collection(Ticket::all());
+        Return TicketResource::collection(Ticket::all()->paginate(3));
     }
 
     public function open() {
-        return TicketResource::collection(Ticket::where('status', false)->paginate());
+        return TicketResource::collection(Ticket::where('status', false)->paginate(3));
     }
 
     public function closed() {
-        return TicketResource::collection(Ticket::where('status', true)->paginate());
+        return TicketResource::collection(Ticket::where('status', true)->paginate(3));
     }
 }
