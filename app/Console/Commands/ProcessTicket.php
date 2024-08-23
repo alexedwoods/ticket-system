@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Ticket;
 use Illuminate\Console\Command;
 
 class ProcessTicket extends Command
@@ -18,13 +19,15 @@ class ProcessTicket extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Marks the oldest open ticket as closed';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        //
+        $ticket = Ticket::where('status', false)->oldest()->first();
+        $ticket->status = true;
+        $ticket->save();
     }
 }
