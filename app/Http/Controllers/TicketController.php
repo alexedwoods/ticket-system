@@ -8,7 +8,7 @@ use App\Models\Ticket;
 class TicketController extends Controller
 {
     public function index() {
-        Return TicketResource::collection(Ticket::all()->paginate(3));
+        return TicketResource::collection(Ticket::paginate(3));
     }
 
     public function open() {
