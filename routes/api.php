@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('closed', [TicketController::class, 'closed']);
     });
 
+    Route::get('/users/{email}/tickets', [TicketController::class, 'userTickets']);
+
     Route::get('user', function (Request $request) {
         return $request->user();
     });
