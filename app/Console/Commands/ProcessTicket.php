@@ -28,11 +28,19 @@ class ProcessTicket extends Command
     {
         try {
             $ticket = Ticket::where('status', false)->oldest()->first();
+
+            if (!$ticket) {
+                $this->info('No open tickets available.');
+                return 0;
+            }
+
             $ticket->status = true;
             $ticket->save();
             $this->info('Processed ticket ID: ' . $ticket->id);
+            return 0;
         } catch (\Throwable $tr) {
             $this->error($tr->getMessage());
+            return 1;
         }
 
     }
