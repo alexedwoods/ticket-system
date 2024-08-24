@@ -11,9 +11,12 @@ class ProcessTicketCommandTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_generate_ticket_command(): void
+    public function test_process_ticket_command(): void
     {
-        //
+        $this->seed();
 
+        $this->artisan('app:process-ticket')
+            ->expectsOutputToContain('Processed ticket ID:')
+            ->assertExitCode(0);
     }
 }

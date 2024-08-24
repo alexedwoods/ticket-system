@@ -26,8 +26,14 @@ class ProcessTicket extends Command
      */
     public function handle()
     {
-        $ticket = Ticket::where('status', false)->oldest()->first();
-        $ticket->status = true;
-        $ticket->save();
+        try {
+            $ticket = Ticket::where('status', false)->oldest()->first();
+            $ticket->status = true;
+            $ticket->save();
+            $this->info('Processed ticket ID: ' . $ticket->id);
+        } catch (\Throwable $tr) {
+            $this->error($tr->getMessage());
+        }
+
     }
 }
