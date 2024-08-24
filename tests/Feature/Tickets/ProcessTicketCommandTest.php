@@ -11,7 +11,7 @@ class ProcessTicketCommandTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_process_ticket_command(): void
+    public function test_process_ticket_command_can_be_processed(): void
     {
         $this->seed();
 

@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class GenerateTicketCommandTest extends TestCase
 {
-    public function test_can_generate_ticket_command(): void
+    public function test_generate_ticket_command_can_be_generated(): void
     {
         $this->seed();
 
