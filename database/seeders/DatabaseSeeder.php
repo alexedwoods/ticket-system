@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
         DB::statement("ALTER TABLE users AUTO_INCREMENT =  $max");
 
         \App\Models\User::factory(10)->create();
-        \App\Models\Ticket::factory(50)->create();
+        //\App\Models\Ticket::factory(50)->create();
     }
 }
