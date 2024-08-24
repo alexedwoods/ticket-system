@@ -91,7 +91,7 @@ class TicketControllerTest extends TestCase
                 'total_tickets',
                 'total_unprocessed_tickets',
                 'user_with_most_tickets',
-                'latest_ticket_created_at_'
+                'latest_ticket_created_at'
             ]);
     }
 }

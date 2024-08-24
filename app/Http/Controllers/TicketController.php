@@ -37,7 +37,7 @@ class TicketController extends Controller
             'total_tickets' => $ticketsCount,
             'total_unprocessed_tickets' => $unprocessedTicketsCount,
             'user_with_most_tickets' => $highestTicketCountUser,
-            'latest_ticket_created_at_' => $latestTicketTimestamp,
+            'latest_ticket_created_at' => $latestTicketTimestamp,
         ]);
     }
 }
