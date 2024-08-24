@@ -17,16 +17,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('tickets')->group(function () {
-        Route::get('/', [TicketController::class, 'index']);
-        Route::get('open', [TicketController::class, 'open']);
-        Route::get('closed', [TicketController::class, 'closed']);
+        Route::get('/', [TicketController::class, 'index'])->name('tickets.index');
+        Route::get('open', [TicketController::class, 'open'])->name('tickets.open');
+        Route::get('closed', [TicketController::class, 'closed'])->name('tickets.closed');
     });
 
-    Route::get('/users/{email}/tickets', [TicketController::class, 'userTickets']);
+    Route::get('/users/{email}/tickets', [TicketController::class, 'userTickets'])->name('users.tickets');
 
     Route::get('user', function (Request $request) {
         return $request->user();
     });
 });
 
-Route::get('stats', [TicketController::class, 'stats']);
+Route::get('stats', [TicketController::class, 'stats'])->name('tickets.stats');
