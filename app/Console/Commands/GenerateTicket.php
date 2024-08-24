@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class GenerateTicket extends Command
@@ -26,11 +27,16 @@ class GenerateTicket extends Command
      */
     public function handle()
     {
-        $ticket = new Ticket();
-        $ticket->subject = fake()->word;
-        $ticket->content = fake()->sentence(50);
-        $ticket->user_id = fake()->numberBetween(1,2);
-        $ticket->status = false;
-        $ticket->save();
+        try {
+            $ticket = new Ticket();
+            $ticket->subject = fake()->word;
+            $ticket->content = fake()->sentence(50);
+            $ticket->user_id = fake()->numberBetween(1,2);
+            $ticket->status = false;
+            $ticket->save();
+            $this->info('Generated ticket - ID: ' . $ticket->id);
+        } catch (\Throwable $th) {
+            $this->error($th->getMessage());
+        }
     }
 }
