@@ -3,15 +3,13 @@
 namespace Feature\Tickets;
 
 use App\Models\Ticket;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProcessTicketCommandTest extends TestCase
 {
     public function test_process_ticket_command_can_be_processed(): void
     {
-        Ticket::factory()->create();
+        Ticket::factory()->create(['status' => false]);
 
         $this->artisan('app:process-ticket')
             ->expectsOutputToContain('Processed ticket ID:')
