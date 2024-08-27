@@ -16,12 +16,12 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Permission::create(['name' => 'process tickets']);
-        Permission::create(['name' => 'generate tickets']);
+        Permission::create(['name' => 'view ticket stats']);
+        Permission::create(['name' => 'view any user tickets']);
 
         Role::create(['name' => 'user']);
 
         $role = Role::create(['name' => 'admin'])
-            ->givePermissionTo(['process tickets', 'generate tickets']);
+            ->givePermissionTo(['view ticket stats', 'view any user tickets']);
     }
 }
