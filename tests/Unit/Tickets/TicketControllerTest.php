@@ -17,6 +17,9 @@ class TicketControllerTest extends TestCase
         $this->user = User::factory()->create(['email' => 'test@example.com']);
         Ticket::factory()->count(5)->create(['user_id' => $this->user->id, 'status' => false]);
         Ticket::factory()->count(3)->create(['user_id' => $this->user->id, 'status' => true]);
+
+        $this->adminUser = User::factory()->create(['email' => 'admin@example.com']);
+        $this->adminUser->assignRole('admin');
     }
 
     public function test_index_shows_all_tickets(): void
@@ -66,7 +69,29 @@ class TicketControllerTest extends TestCase
             ->assertJsonFragment(['status' => true]);
     }
 
-    public function test_user_shows_all_users_tickets(): void
+    public function test_admin_shows_all_users_tickets(): void
+    {
+        $response = $this->actingAs($this->adminUser)->get('/api/users/test@example.com/tickets');
+
+        $response->assertStatus(200)
+            ->assertJsonCount(3, 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => ['id', 'status']
+                ],
+                'links',
+                'meta'
+            ]);
+    }
+
+    public function test_user_does_not_show_all_users_tickets(): void
+    {
+        $response = $this->actingAs($this->user)->get('/api/users/admin@example.com/tickets');
+
+        $response->assertStatus(401);
+    }
+
+    public function test_user_shows_only_users_tickets(): void
     {
         $response = $this->actingAs($this->user)->get('/api/users/test@example.com/tickets');
 
@@ -80,6 +105,8 @@ class TicketControllerTest extends TestCase
                 'meta'
             ]);
     }
+
+
 
     public function test_stats_shows_all_stats(): void
     {

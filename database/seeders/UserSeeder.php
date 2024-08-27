@@ -27,5 +27,17 @@ class UserSeeder extends Seeder
 
         $user = \App\Models\User::factory()->create([]);
         $user->assignRole('admin');
+
+        $user = \App\Models\User::factory()->create([
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('admin'),
+        ]);
+        $user->assignRole('admin');
+
+        $user = \App\Models\User::factory()->create([
+            'email' => 'user@user.com',
+            'password' => bcrypt('user'),
+        ]);
+        $user->assignRole('user');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -21,8 +22,14 @@ class TicketController extends Controller
     }
 
     public function userTickets($email) {
-        $user = User::where('email', $email)->first();
-        return TicketResource::collection($user->tickets()->paginate(3));
+        if ($email == Auth::user()->email or Auth::user()->can('view any user tickets')) {
+            $user = User::where('email', $email)->first();
+            return TicketResource::collection($user->tickets()->paginate(3));
+        } else {
+            return response('', 401);
+        }
+
+
     }
 
     public function stats() {
